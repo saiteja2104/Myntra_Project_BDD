@@ -43,7 +43,18 @@ public class MyntraTestBase {
 	}
 public WebDriver driverinitializer() throws MalformedURLException {
 	if (prop.getProperty("browser").equals("chrome")) {
-		driver=new ChromeDriver();}
+		if(prop.getProperty("browserenvtype").equals("remote"))
+		{
+			DesiredCapabilities cap= new DesiredCapabilities();
+
+			cap.setPlatform (Platform.WIN10); //cap.setPlatform (Platform.MAC); 
+			cap.setBrowserName("chrome"); //cap.setBrowserName("MicrosoftEdge")
+
+			driver = new RemoteWebDriver(new URL("http://192.168.17.156:4444/wd/hub"), cap);
+
+		}
+		else {
+		driver=new ChromeDriver();}}
 	else if(prop.getProperty("browser").equals("firefox")) {
 		driver=new FirefoxDriver();}
 	else if(prop.getProperty("browser").equals("InternetExplorer")) {
